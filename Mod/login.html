@@ -176,7 +176,7 @@ $(document).ready(function() {
           // Una volta effettuato l'accesso con successo, esegui la redirezione
           const token = response.data.login.accessToken;
           $.cookie('accessToken', token, { path: '/' });
-          window.location.href = '/Mod/mainPage.html';
+          window.location.href = '/mod/analisi';
           //salva il token nell'authotization header
           $.ajaxSetup({
             beforeSend: function(xhr) {

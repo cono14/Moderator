@@ -310,36 +310,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script>
     function redirectUser() {
-      window.location.href = '/Mod/users.html';
+      window.location.href = '/mod/utenti';
     }
 
     function redirectSqueals() {
-      window.location.href = '/Mod/squeals.html';
+      window.location.href = '/mod/squeals';
     }
 
     function redirectCreateChannel() {
-      window.location.href = '/Mod/createChannel.html';
+      window.location.href = '/mod/creaCanale';
     }
 
     function handleOfficialChannels() {
-      window.location.href = '/Mod/canaliUfficiali.html';
+      window.location.href = '/mod/canaliUfficiali';
     }
 
     function handleUserChannels(){
-      window.location.href = '/Mod/canaliUtente.html';
+      window.location.href = '/mod/canaliUtente';
     }
 
     function handleTemporaryChannels(){
-      window.location.href = '/Mod/canaliTemporanei.html';
+      window.location.href = '/mod/canaliTemporanei';
     }
 
     function redirectPublish(){
-      window.location.href = '/Mod/pubblica.html';
+      window.location.href = '/mod/pubblica';
     }
 
     function redirectMainPage(){
-      window.location.href = '/Mod/mainPage.html';
+      window.location.href = '/mod/analisi';
     }
+
     $(document).ready(function () {
       function getMyAccount() {
         console.log($.cookie('accessToken'))

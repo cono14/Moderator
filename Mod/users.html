@@ -6,7 +6,8 @@
   <title>users</title>
   <!-- Includi il link a Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- Includi bootsrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"><script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <!-- Includi jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <style>
@@ -606,41 +607,42 @@
     </div>
   </div>
     
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-LZpqxjH6Vu+8WGi+1L4Lvpo1SmUv34CS+Q9dMWfi5e9O4+6g5tuZE1FRs1YFA" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
-              function redirectUser() {
-      window.location.href = '/Mod/users.html';
+    function redirectUser() {
+      window.location.href = '/mod/utenti';
     }
 
     function redirectSqueals() {
-      window.location.href = '/Mod/squeals.html';
+      window.location.href = '/mod/squeals';
     }
 
     function redirectCreateChannel() {
-      window.location.href = '/Mod/createChannel.html';
+      window.location.href = '/mod/creaCanale';
     }
 
     function handleOfficialChannels() {
-      window.location.href = '/Mod/canaliUfficiali.html';
+      window.location.href = '/mod/canaliUfficiali';
     }
 
     function handleUserChannels(){
-      window.location.href = '/Mod/canaliUtente.html';
+      window.location.href = '/mod/canaliUtente';
     }
 
     function handleTemporaryChannels(){
-      window.location.href = '/Mod/canaliTemporanei.html';
+      window.location.href = '/mod/canaliTemporanei';
     }
 
     function redirectPublish(){
-      window.location.href = '/Mod/pubblica.html';
+      window.location.href = '/mod/pubblica';
     }
 
     function redirectMainPage(){
-      window.location.href = '/Mod/mainPage.html';
+      window.location.href = '/mod/analisi';
     }
+
 
           function handleBlockUserClick(id, isBlocked) {
                         const userId = id;
@@ -1211,6 +1213,7 @@ mostActiveUsersList.empty();
                                     nome
                                     cognome
                                     username
+                                    profileImage
                                 }
                             }
                         `,

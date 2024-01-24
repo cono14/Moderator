@@ -178,6 +178,10 @@
       margin-right: 30%;
       margin-left: 26%;
       cursor: pointer;
+      max-width: 60%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .squeal-container:hover {
@@ -204,6 +208,10 @@
       margin-top: 0;
       font-size: 1.4rem;
       font-weight: bold;
+      max-width: 50%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .channel-description{
@@ -224,6 +232,7 @@
       width: 100%; 
       transition: transform 0.3s;
       cursor: pointer;
+     
     }
 
     .squeal-container-message:hover {
@@ -597,8 +606,8 @@
         <div class="modal-body">
               <p class="smallTitleDescrizione">Modifica Proprietari</p>
               <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-outline-primary rounded-pill mr-4" id="addUsers">Aggiungi utenti</button>
-                <button class="btn btn-outline-danger rounded-pill ml-4" id="removeUsers">Rimuovi utenti</button>
+                <button class="btn btn-outline-primary rounded-pill mr-4" id="addUsers">Aggiungi</button>
+                <button class="btn btn-outline-danger rounded-pill ml-4" id="removeUsers">Rimuovi</button>
                 </div>
            <p class="smallTitleDescrizione">Modifica nome</p>
            <div class="nameContainer">
@@ -653,36 +662,37 @@
 
     let currentChannelId = null;
     function redirectUser() {
-      window.location.href = '/Mod/users.html';
+      window.location.href = '/mod/utenti';
     }
 
     function redirectSqueals() {
-      window.location.href = '/Mod/squeals.html';
+      window.location.href = '/mod/squeals';
     }
 
     function redirectCreateChannel() {
-      window.location.href = '/Mod/createChannel.html';
+      window.location.href = '/mod/creaCanale';
     }
 
     function handleOfficialChannels() {
-      window.location.href = '/Mod/canaliUfficiali.html';
+      window.location.href = '/mod/canaliUfficiali';
     }
 
     function handleUserChannels(){
-      window.location.href = '/Mod/canaliUtente.html';
+      window.location.href = '/mod/canaliUtente';
     }
 
     function handleTemporaryChannels(){
-      window.location.href = '/Mod/canaliTemporanei.html';
+      window.location.href = '/mod/canaliTemporanei';
     }
 
     function redirectPublish(){
-      window.location.href = '/Mod/pubblica.html';
+      window.location.href = '/mod/pubblica';
     }
 
     function redirectMainPage(){
-      window.location.href = '/Mod/mainPage.html';
+      window.location.href = '/mod/analisi';
     }
+
 
 
     $('#addUsers').on('click', function () {
@@ -1253,6 +1263,60 @@ function updateSquealsUI(squeals) {
     squealsContainer.append(squealContainer);
   });
 }
+function getUserChannels(searchText = "") {
+        $.ajax({
+          url: 'http://localhost:8000/graphql',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            query: `
+            query getChannelsByType($channelType: String!){
+                getChannelsByType(type: $channelType){
+                    _id
+                    name
+                    description
+                    channelImage
+                    owners 
+                    isBlocked
+                    partecipants
+                    squeals
+                    
+                }
+            }
+            `, 
+            variables: {
+              channelType: 'CANALE_UTENTI',
+            },
+          }),
+          success: function (response) {
+            console.log('Query success:', response);
+            // Aggiungi gli elementi dei canali ufficiali al container
+            console.log('response.data.getChannelsByType', response.data.getChannelsByType.length);
+            for(let i = 0; i< response.data.getChannelsByType.length; i++){
+              for(let j = 0; j< response.data.getChannelsByType[i].owners.length; j++){
+                channelOwnersIds.push(response.data.getChannelsByType[i].owners[j]);
+              }
+            }
+
+            console.log('channelOwnersIds', channelOwnersIds);
+            channelsDataInitial = response.data.getChannelsByType; 
+            console.log('channelsDataInitial', channelsDataInitial); 
+            const filteredChannels = response.data.getChannelsByType.filter(channel => {
+              return channel.name.toLowerCase().includes(searchText.toLowerCase());
+            });
+            
+            updateChannelUI(filteredChannels);
+          },
+          error: function (error) {
+            console.error('Errore durante la query:', error);
+          },
+        });
+      }
+      $('#searchInput').on('input', function () {
+            const searchTerm = $(this).val();
+            getUserChannels(searchTerm);
+        });
+
 
 
 function removeSquealMutation(squealId, channelId) {
@@ -1276,6 +1340,7 @@ function removeSquealMutation(squealId, channelId) {
       console.log('Squeal rimosso con successo:', response);
       toastr.success('Squeal rimosso con successo');
     //wait 1 second before reloading the page
+    getUserChannels();
     setTimeout(function(){ location.reload(); }, 1000);
     
     },
@@ -1287,7 +1352,6 @@ function removeSquealMutation(squealId, channelId) {
 
 $('#viewSqueals').click(function () {
   $('#channelModal').modal('hide');
-  $('#squealsModal').modal('show');
   loadSqueals(currentChannelId);
 });
 
@@ -1348,6 +1412,9 @@ $('#viewSqueals').click(function () {
             const numberOfPosts = prompt('Inserisci il numero minimo di post:');
             if (numberOfPosts !== null) {
                 // Filtra i canali con un numero di partecipanti maggiore o uguale a numberOfParticipants
+                for(let i = 0; i < channelsDataInitial.length; i++){
+                 console.log('channelsDataInitial[i].squeals.length', channelsDataInitial[i].name + channelsDataInitial[i].squeals.length);
+                }
                 const filteredChannels = channelsDataInitial.filter(channel => channel.squeals.length >= parseInt(numberOfPosts));
                 // Aggiorna l'UI con i canali filtrati
                 updateChannelUI(filteredChannels);
@@ -1390,6 +1457,7 @@ $('#viewSqueals').click(function () {
     $('#buttonReset').click(function () {
         deselectOtherButtons(null);
         activeFilter = null;
+        filtraProprietari = [];
         getUserChannels();
     });
 
@@ -1432,59 +1500,6 @@ $('#viewSqueals').click(function () {
         $('#channelModal').css('display', 'none');
       }
     });
-
-      function getUserChannels(searchText = "") {
-        $.ajax({
-          url: 'http://localhost:8000/graphql',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            query: `
-            query getChannelsByType($channelType: String!){
-                getChannelsByType(type: $channelType){
-                    _id
-                    name
-                    description
-                    channelImage
-                    owners 
-                    isBlocked
-                    partecipants
-                    squeals
-                    
-                }
-            }
-            `, 
-            variables: {
-              channelType: 'CANALE_UTENTI',
-            },
-          }),
-          success: function (response) {
-            console.log('Query success:', response);
-            // Aggiungi gli elementi dei canali ufficiali al container
-            console.log('response.data.getChannelsByType', response.data.getChannelsByType.length);
-            for(let i = 0; i< response.data.getChannelsByType.length; i++){
-              for(let j = 0; j< response.data.getChannelsByType[i].owners.length; j++){
-                channelOwnersIds.push(response.data.getChannelsByType[i].owners[j]);
-              }
-            }
-
-            console.log('channelOwnersIds', channelOwnersIds);
-            channelsDataInitial = response.data.getChannelsByType;   
-            const filteredChannels = response.data.getChannelsByType.filter(channel => {
-              return channel.name.toLowerCase().includes(searchText.toLowerCase());
-            });
-            
-            updateChannelUI(filteredChannels);
-          },
-          error: function (error) {
-            console.error('Errore durante la query:', error);
-          },
-        });
-      }
-      $('#searchInput').on('input', function () {
-            const searchTerm = $(this).val();
-            getUserChannels(searchTerm);
-        });
 
 
       // Esegui la funzione per ottenere e visualizzare i canali ufficiali
