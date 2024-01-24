@@ -872,13 +872,12 @@ function getAllUsers() {
 
     $(document).ready(function () {
       function getMyAccount() {
-        console.log($.cookie('accessToken'))
         $.ajax({
           url: 'http://localhost:8000/graphql',
           type: 'POST',
           contentType: 'application/json',
           headers: {
-            Authorization: `Bearer ${$.cookie('accessToken')}`,
+            Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
           },
           data: JSON.stringify({
             query: `

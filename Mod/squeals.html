@@ -1220,11 +1220,14 @@ function getAllSqueals(searchText = '') {
       console.log('Query getAllSqueals success:', response);
       //for each squeal take the ones with uploaded image
       
-      // Filtra gli squeals in base al testo di ricerca
-      const filteredSqueals = response.data.getAllSqueals.filter((squeal) =>
-        //keep the squeals with no text or that include the search text
-        !squeal.squeal.text || squeal.squeal.text.toLowerCase().includes(searchText.toLowerCase())
-      );
+      let filteredSqueals;
+      if (searchText === '') {
+        filteredSqueals = response.data.getAllSqueals;
+      } else {
+        filteredSqueals = response.data.getAllSqueals.filter((squeal) => {
+          return squeal.squeal.text && squeal.squeal.text.toLowerCase().includes(searchText.toLowerCase());
+        });
+      }
       updateSquealsUI(filteredSqueals);
     },
     error: function (error) {
@@ -1303,6 +1306,7 @@ let mittenteUsername = null;
         destionationUserUsername = null;
         popular = false;
         unpopular = false;
+        date = null;
         getAllSqueals();
       });
 
@@ -1373,6 +1377,7 @@ let mittenteUsername = null;
 
         // Chiudi il modale
         $('#dateModal').modal('hide');
+        $('#datepicker').val('');
       });
 
 
@@ -1467,7 +1472,8 @@ let mittenteUsername = null;
     }
   });
 
-      function getFilteredUsers() {
+
+function getFilteredUsers() {
       console.log('mittenteUsername', mittenteUsername)
       console.log('destionationUserUsername', destionationUserUsername)
       console.log('popular', popular)
@@ -1545,13 +1551,12 @@ let mittenteUsername = null;
 
 
       function getMyAccount() {
-        console.log($.cookie('accessToken'))
         $.ajax({
           url: 'http://localhost:8000/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
           type: 'POST',
           contentType: 'application/json',
           headers: {
-            Authorization: `Bearer ${$.cookie('accessToken')}`,
+            Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
           },
           data: JSON.stringify({
             query: `

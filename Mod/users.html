@@ -1336,13 +1336,12 @@ mostActiveUsersList.empty();
 }
 
         function getMyAccount() {
-          console.log($.cookie('accessToken'))
           $.ajax({
             url: 'http://localhost:8000/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
             type: 'POST',
             contentType: 'application/json',
             headers: {
-              Authorization: `Bearer ${$.cookie('accessToken')}`,
+              Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
             },
             data: JSON.stringify({
               query: `

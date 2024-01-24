@@ -175,14 +175,18 @@ $(document).ready(function() {
         } else {
           // Una volta effettuato l'accesso con successo, esegui la redirezione
           const token = response.data.login.accessToken;
-          $.cookie('accessToken', token, { path: '/' });
+          $.cookie('AccessTokenMod', token, { path: '/' });
           window.location.href = '/mod/analisi';
+          //send the request to change page with the token
+          
           //salva il token nell'authotization header
           $.ajaxSetup({
             beforeSend: function(xhr) {
               xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+              window.location.href = '/mod/analisi';
             }
           });
+          
         }
       },
       error: function(error) {
