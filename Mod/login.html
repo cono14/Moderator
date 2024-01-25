@@ -176,13 +176,13 @@ $(document).ready(function() {
           // Una volta effettuato l'accesso con successo, esegui la redirezione
           const token = response.data.login.accessToken;
           $.cookie('AccessTokenMod', token, { path: '/' });
-          window.location.href = '/mod/analisi';
           //send the request to change page with the token
           
           //salva il token nell'authotization header
           $.ajaxSetup({
             beforeSend: function(xhr) {
               xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+              console.log('Bearer ' + token);
               window.location.href = '/mod/analisi';
             }
           });
