@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squealer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .title {
+            font-family: 'Horizon'; 
+            font-size: 100px;
+            font-weight: 800;
+            margin-top: -8%;
+            background: linear-gradient(50deg, #FF3385, #3399FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    
+        .container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            border-radius: 16px;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+    
+        .card:before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 140%;
+            box-sizing: border-box;
+            z-index: -1;
+            background: linear-gradient( #000000, #FF3385);
+            animation: animateSMM 5s linear infinite;
+        }
+
+        .card-center:before {
+            background: linear-gradient( #000000, #00B359);
+            animation: animateApp 5s linear infinite;
+        }
+
+        .card-right:before {
+            background: linear-gradient( #000000, #3399FF);
+            animation: animateMod 5s linear infinite;
+        }
+
+        .card::after{
+            content: '';
+            position: absolute;
+            background: white;
+            inset: 4px;
+            border-radius: 16px;
+        }
+
+        .card p,
+        .card img,
+        .card button {
+            position: relative;
+            z-index: 1;
+            color: white; /* Testo bianco di default */
+        }
+
+        .card-left p,
+.card-left img,
+.card-left .smmTitle {
+    background: linear-gradient( #000000, #FF3385);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-center p,
+.card-center img,
+.card-center .appTitle {
+    background: linear-gradient( #000000, #00B359);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-right p,
+.card-right img,
+.card-right .modTitle {
+    background: linear-gradient( #000000, #3399FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-left button{
+    color: #FF3385;
+}
+.card-right button{
+    color: #3399FF;
+}
+
+.card-center button{
+    color: #00B359;
+}
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+        }
+    
+        @keyframes animateSMM {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animateApp {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes animateMod {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card-left {
+            border: 2px solid transparent;
+        }
+
+        .card-center {
+            border: 2px solid transparent;
+        }
+
+        .card-right {
+            border: 2px solid transparent;
+        }
+
+        .buttonSmm,
+        .buttonApp,
+        .buttonMod {
+            color: black;
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buttonSmm{
+            background-image: linear-gradient(50deg, #FF3385, #000000);
+        }
+
+        .buttonApp{
+            background-image: linear-gradient(50deg, #00B359, #000000);
+        }
+
+        .buttonMod{
+            background-image: linear-gradient(50deg, #3399FF, #000000);
+        }
+
+        .buttonSmm:before,
+        .buttonApp:before,
+        .buttonMod:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px solid transparent;
+            z-index: -1;
+            background: white;
+        }
+
+        .buttonSmm:hover,
+        .buttonApp:hover,
+        .buttonMod:hover {
+            color: white;
+        }
+
+        .buttonSmm:hover:before{
+            background: linear-gradient(50deg, #FF3385, #000000);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .buttonApp:hover:before{
+            background: linear-gradient(50deg, #00B359, #000000);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .buttonMod:hover:before{
+            background: linear-gradient(50deg, #3399FF, #000000);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+
+        .smmTitle,
+        .modTitle,
+        .appTitle {
+            font-weight: bold;
+            font-size: large;
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Squealer</h1>
+    <div class="container">
+        <div class="card card-left">
+            <!-- Immagine da inserire qui -->
+            <p class="smmTitle">Social Media Manager</p>
+            <img src="./images/3 (1).png" alt="Immagine SMM" style="width: 200px; height: 200px;">
+            <button class="buttonSmm" onclick="openSMM()">Vai a smm</button>
+        </div>
+        <div class="card card-center">
+            <!-- Immagine da inserire qui -->
+            <p class="appTitle">App</p>
+            <img src="./images/squealer_logo (1).png" alt="Immagine App" style="width: 200px; height: 200px;">
+            <button class="buttonApp" onclick="openApp()">Vai ad app</button>
+        </div>
+        <div class="card card-right">
+            <p class="modTitle">Moderator</p>
+            <img src="./images/1 (2).png" alt="Immagine Pagina Mod" style="width: 200px; height: 200px;">
+            <button class="buttonMod" onclick="openMod()">Vai a mod</button>
+        </div>
+    </div>
+    <script>
+        function openSMM() {
+            window.location.href = 'http://localhost:8000/smm';
+        }
+    
+        function openApp() {
+            window.location.href = 'http://localhost:8000/app';
+        }
+    
+        function openMod() {
+            window.location.href = 'http://localhost:8000/mod';
+        }
+    </script>
+</body>
+
+</html>
