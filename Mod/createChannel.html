@@ -344,7 +344,7 @@
     $(document).ready(function () {
       function getMyAccount() {
         $.ajax({
-          url: 'http://localhost:8000/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
+          url: 'https://site222344.tw.cs.unibo.it/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
           type: 'POST',
           contentType: 'application/json',
           headers: {
@@ -409,11 +409,11 @@
 
         // Chiamata alla mutazione GraphQL
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           headers: {
-            Authorization: `Bearer ${$.cookie('accessToken')}`,
+            Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
           },
           data: JSON.stringify({
             query: `

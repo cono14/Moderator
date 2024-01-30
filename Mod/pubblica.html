@@ -593,11 +593,11 @@ function postSqueal() {
     if (!file) {
         // Chiamata senza file
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             headers: {
-                Authorization: `Bearer ${$.cookie('accessToken')}`,
+                Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
             },
             data: JSON.stringify({
                 query: `
@@ -658,10 +658,10 @@ function postSqueal() {
         formData.append('0', file, file.name);
 
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             headers: {
-                Authorization: `Bearer ${$.cookie('accessToken')}`,
+                Authorization: `Bearer ${$.cookie('AccessTokenMod')}`,
             },
             data: formData,
             contentType: false,
@@ -795,7 +795,7 @@ let destinationChannel = [];
 
 function getAllUsers() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -839,7 +839,7 @@ function getAllUsers() {
 
       function getAllChannels() {
     $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -873,7 +873,7 @@ function getAllUsers() {
     $(document).ready(function () {
       function getMyAccount() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           headers: {

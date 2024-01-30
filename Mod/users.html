@@ -649,7 +649,7 @@
                         const mutationName = isBlocked ? 'unblockUser' : 'blockUser';
 
                         $.ajax({
-                            url: 'http://localhost:8000/graphql',
+                            url: 'https://site222344.tw.cs.unibo.it/graphql',
                             type: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify({
@@ -688,7 +688,7 @@
         getMostFriends();
         function getMostFriends(){
             $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -717,7 +717,7 @@
 function getMostActiveUsers() {
             console.log('ciao')
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -745,7 +745,7 @@ function getMostActiveUsers() {
 
  function getMostUnpopularUser(){
     $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -774,7 +774,7 @@ function getMostActiveUsers() {
  function getMostPopularUsers() {
             console.log('ciao')
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -868,7 +868,7 @@ mostActiveUsersList.empty();
 
     function handleRemoveCharactersClick(userId, charactersToRemove, typeOfCharacters) {
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -894,7 +894,7 @@ mostActiveUsersList.empty();
     }
             function handleAddCharactersClick(userId, charactersToAdd, typeOfCharacters) {
                 $.ajax({
-                    url: 'http://localhost:8000/graphql',
+                    url: 'https://site222344.tw.cs.unibo.it/graphql',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -924,7 +924,7 @@ mostActiveUsersList.empty();
                     function openUserProfile(userId) {
                         console.log('ciao')
                             $.ajax({
-                                url: 'http://localhost:8000/graphql',
+                                url: 'https://site222344.tw.cs.unibo.it/graphql',
                                 type: 'POST',
                                 contentType: 'application/json',
                                 data: JSON.stringify({
@@ -1109,7 +1109,7 @@ mostActiveUsersList.empty();
 
         function getAllUsers() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -1186,7 +1186,7 @@ mostActiveUsersList.empty();
         }
 
     function makeBackendCall(userType, popularityIndex) {
-        const backendURL = 'http://localhost:8000/graphql';
+        const backendURL = 'https://site222344.tw.cs.unibo.it/graphql';
 
         if(popularityIndex === undefined){
             popularityIndex = 0;
@@ -1337,7 +1337,7 @@ mostActiveUsersList.empty();
 
         function getMyAccount() {
           $.ajax({
-            url: 'http://localhost:8000/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
+            url: 'https://site222344.tw.cs.unibo.it/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
             type: 'POST',
             contentType: 'application/json',
             headers: {
@@ -1423,7 +1423,7 @@ mostActiveUsersList.empty();
                     
                     
                     $.ajax({
-                        url: 'http://localhost:8000/graphql',
+                        url: 'https://site222344.tw.cs.unibo.it/graphql',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify({

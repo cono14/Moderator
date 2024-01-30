@@ -969,7 +969,7 @@
     destinatariInizialiUsers.forEach((user) => {
         let promise = new Promise((resolve, reject) => {
             $.ajax({
-                url: 'http://localhost:8000/graphql',
+                url: 'https://site222344.tw.cs.unibo.it/graphql',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -1018,7 +1018,7 @@ function getAllChannelDestinatari() {
     destinatariInizialiChannels.forEach((channel) => {
         let promise = new Promise((resolve, reject) => {
             $.ajax({
-                url: 'http://localhost:8000/graphql',
+                url: 'https://site222344.tw.cs.unibo.it/graphql',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -1059,7 +1059,7 @@ function getAllChannelDestinatari() {
 
 function getAllChannels() {
     $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1180,7 +1180,7 @@ let squealerId = null;
 
 function getAllSqueals(searchText = '') {
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -1386,7 +1386,7 @@ let mittenteUsername = null;
 
       function getAllUsers() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -1439,7 +1439,7 @@ let mittenteUsername = null;
       
       // Effettua la chiamata GraphQL per eliminare lo Squeal
       $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         headers: {
@@ -1480,7 +1480,7 @@ function getFilteredUsers() {
       console.log('unpopular', unpopular)
       console.log('date', date)
       $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1489,6 +1489,7 @@ function getFilteredUsers() {
               getUserSqueals(username: $username, popular: $popular, unpopular: $unpopular, date: $date, destionationUserUsername: $destionationUserUsername){
                   __typename 
                 squeal{
+		_id
                   text
                   reactions{
                     type
@@ -1552,7 +1553,7 @@ function getFilteredUsers() {
 
       function getMyAccount() {
         $.ajax({
-          url: 'http://localhost:8000/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
+          url: 'https://site222344.tw.cs.unibo.it/graphql', // Sostituisci con l'URL effettivo del tuo server GraphQL
           type: 'POST',
           contentType: 'application/json',
           headers: {
@@ -1637,7 +1638,7 @@ function getFilteredUsers() {
 
     function updateModalInfo(squealId) {
       $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1768,7 +1769,7 @@ function getFilteredUsers() {
     // Funzione per chiamare la query GraphQL per aggiungere reazioni
 function addReactionToSqueal(squealId, reactionType, userId, numberOfReactions) {
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -1827,7 +1828,7 @@ function addReactionToSqueal(squealId, reactionType, userId, numberOfReactions) 
 // Funzione per chiamare la query GraphQL per rimuovere reazioni
 function removeReactionFromSqueal(squealId, reactionType, numberOfReactions) {
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -1881,7 +1882,7 @@ function removeReactionFromSqueal(squealId, reactionType, numberOfReactions) {
 
 function addDestinationToSqueal(squealId, destinationUsers, destinationChannels) {
     $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1934,7 +1935,7 @@ function addDestinationToSqueal(squealId, destinationUsers, destinationChannels)
 
 function removeDestinationFromSqueal(squealId, destinationUsers, destinationChannels) {
     $.ajax({
-        url: 'http://localhost:8000/graphql',
+        url: 'https://site222344.tw.cs.unibo.it/graphql',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({

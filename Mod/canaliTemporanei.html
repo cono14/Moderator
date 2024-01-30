@@ -590,7 +590,7 @@ function loadSqueals(channelId) {
   // Esegui la chiamata GraphQL per ottenere gli Squeals del canale
   console.log('channelId', channelId)
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -730,7 +730,7 @@ function updateSquealsUI(squeals) {
 function removeSquealMutation(squealId, channelId) {
   // Esegui la chiamata GraphQL per rimuovere lo Squeal dal canale
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -842,7 +842,6 @@ function removeSquealMutation(squealId, channelId) {
         $('#channelModal').modal('show');
         console.log('Ciao, cliccato su .squeal-container');
     $('#channelModal').modal('hide');
-    $('#squealsModal').modal('show');
     loadSqueals(currentChannelId);
         });
 
@@ -857,7 +856,7 @@ function removeSquealMutation(squealId, channelId) {
 
       function getUserChannels(searchText = "") {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -902,7 +901,7 @@ function removeSquealMutation(squealId, channelId) {
 
       function getMyAccount() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           headers: {

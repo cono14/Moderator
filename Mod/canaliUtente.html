@@ -14,7 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <style>
   body {
       margin: 0;
@@ -633,7 +633,8 @@
 ></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-  <script>
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+ <script>
 
     let channelOwnersIds = [];
     let newOwners = [];
@@ -816,7 +817,7 @@
 
 function getAllUsersForModal() {
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -857,7 +858,7 @@ function getAllOwners() {
     channelOwnersIds.forEach((user) => {
         let promise = new Promise((resolve, reject) => {
             $.ajax({
-                url: 'http://localhost:8000/graphql',
+                url: 'https://site222344.tw.cs.unibo.it/graphql',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -899,7 +900,7 @@ function getAllOwners() {
 }
 function getAllUsers() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -945,7 +946,7 @@ function getAllUsers() {
     const channelId = currentChannelId;
     if (selectedAddUsers.length > 0) {
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -976,7 +977,7 @@ function getAllUsers() {
     // Verifica se la lista degli utenti da rimuovere non è vuota
     if (selectedRemoveUsers.length > 0) {
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -1011,7 +1012,7 @@ function getAllUsers() {
     if (newChannelName) {
         // Chiamata GraphQL per cambiare il nome del canale
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -1056,7 +1057,7 @@ $('#blockChannel').click(function () {
     if (isBlocked) {
         // Chiamata GraphQL per sbloccare il canale
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -1086,7 +1087,7 @@ $('#blockChannel').click(function () {
     } else {
         // Chiamata GraphQL per bloccare il canale
         $.ajax({
-            url: 'http://localhost:8000/graphql',
+            url: 'https://site222344.tw.cs.unibo.it/graphql',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -1124,7 +1125,7 @@ $('#blockChannel').click(function () {
     function loadSqueals(channelId) {
   // Esegui la chiamata GraphQL per ottenere gli Squeals del canale
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -1219,7 +1220,19 @@ function updateSquealsUI(squeals) {
       Your browser does not support the video tag.
     </video>`);
     } else if(squeal.squeal.geolocation){
-
+      const mapId = 'map' + Math.floor(Math.random() * 1000000);
+  squealText.empty().append(`<div id="${mapId}" style="height: 200px; width: 80%;"></div>`);
+  setTimeout(function() {
+    var map = L.map(mapId).setView([squeal.squeal.geolocation.latitude, squeal.squeal.geolocation.longitude], 20);
+            
+    // Add the OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+            
+    // Add a marker at the specified coordinates
+    L.marker([squeal.squeal.geolocation.latitude, squeal.squeal.geolocation.longitude]).addTo(map);
+  }, 0);
     }
     else if(squeal.squeal.text){
       squealText.append(`<p style="margin-left: 0%">${squeal.squeal.text}</p>`);
@@ -1265,7 +1278,7 @@ function updateSquealsUI(squeals) {
 }
 function getUserChannels(searchText = "") {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
@@ -1322,7 +1335,7 @@ function getUserChannels(searchText = "") {
 function removeSquealMutation(squealId, channelId) {
   // Esegui la chiamata GraphQL per rimuovere lo Squeal dal canale
   $.ajax({
-    url: 'http://localhost:8000/graphql',
+    url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -1507,7 +1520,7 @@ $('#viewSqueals').click(function () {
 
       function getMyAccount() {
         $.ajax({
-          url: 'http://localhost:8000/graphql',
+          url: 'https://site222344.tw.cs.unibo.it/graphql',
           type: 'POST',
           contentType: 'application/json',
           headers: {

@@ -234,6 +234,29 @@
             font-size: large;
             color: transparent;
         }
+	@media only screen and (max-width: 767px) {
+    .container {
+        flex-direction: column; /* Le card saranno in colonna su schermi piccoli */
+        align-items: center; /* Centra le card */
+        margin-top: 5%;
+        margin-bottom: 20px;
+    }
+    .title{
+        margin-top: 120%;
+        font-size: 80px;
+    }
+   .card-left{
+        margin-bottom: 10%;
+    }
+
+    .card-center{
+        margin-bottom: 10%;
+    }
+
+    .card-right{
+        margin-bottom: 10%;
+    }
+}
     </style>
 </head>
 <body>
@@ -259,15 +282,15 @@
     </div>
     <script>
         function openSMM() {
-            window.location.href = 'http://localhost:8000/smm';
+            window.location.href = 'https://site222344.tw.cs.unibo.it/smm';
         }
     
         function openApp() {
-            window.location.href = 'http://localhost:8000/app';
+            window.location.href = 'https://site222344.tw.cs.unibo.it/app/';
         }
     
         function openMod() {
-            window.location.href = 'http://localhost:8000/mod';
+            window.location.href = 'https://site222344.tw.cs.unibo.it/mod/';
         }
     </script>
 </body>
