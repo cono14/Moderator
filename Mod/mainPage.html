@@ -301,15 +301,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var squealsData = data;
     var dates = squealsData.data.getNumberOfSquealsPerDay.map(entry => entry.date);
     var formattedDates = dates.map(dateString => new Date(dateString).toISOString().slice(0, 10));
-    console.log('formattedDates', formattedDates);
     var numbers = squealsData.data.getNumberOfSquealsPerDay.map(entry => entry.number);
 
-    console.log(dates);
-    console.log(numbers);
-    
     // Crea un oggetto di contesto per il canvas
     var ctx = document.getElementById("squealsChart").getContext("2d");
-    console.log(ctx);
 
     // Crea il grafico a linea
     var myChart = new Chart(ctx, {
@@ -555,8 +550,6 @@ document.addEventListener("DOMContentLoaded", function () {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             // Puoi gestire i dati qui e aggiornare la tua interfaccia utente
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
@@ -565,11 +558,6 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         });
       }
-
-      
-
-      // Chiamare la funzione quando il documento è pronto
-      console.log('chiamando')
       getMyAccount();
     });
   </script>

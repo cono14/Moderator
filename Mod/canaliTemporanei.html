@@ -588,7 +588,7 @@
 
 function loadSqueals(channelId) {
   // Esegui la chiamata GraphQL per ottenere gli Squeals del canale
-  console.log('channelId', channelId)
+
   $.ajax({
     url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
@@ -630,7 +630,6 @@ function loadSqueals(channelId) {
       },
     }),
     success: function (response) {
-      console.log('Squeals del canale:', response);
 
       if(response.data.getSquealsByChannel.length === 0) {
         toastr.info('Non ci sono squeals da visualizzare');
@@ -671,7 +670,6 @@ function updateSquealsUI(squeals) {
     squealContainer.append(userInfo);
 
     const squealText = $('<div class="squeal-text"></div>');
-    console.log('Squeal uploadedFile,' , squeal.squeal.uploadedFile)
     let typeOfUpload = squeal.squeal.typeOfUpload;
     if(typeOfUpload == "image" && squeal.squeal.uploadedFile){
       squealText.append(`<img src="${squeal.squeal.uploadedFile}"  margin-bottom: 10px;">`);
@@ -745,7 +743,6 @@ function removeSquealMutation(squealId, channelId) {
       },
     }),
     success: function (response) {
-      console.log('Squeal rimosso con successo:', response);
       toastr.success('Squeal rimosso con successo');
     //wait 1 second before reloading the page
     setTimeout(function(){ location.reload(); }, 1000);
@@ -802,7 +799,6 @@ function removeSquealMutation(squealId, channelId) {
           // Aggiungi la classe 'clicked' solo al pulsante cliccato
           $(this).addClass('clicked');
         if (activeFilter === 'popolarità') {
-            console.log('Ordina per popolarità');
             channelsDataInitial.sort((a, b) => b.partecipants.length - a.partecipants.length);
             updateChannelUI(channelsDataInitial);
         } else if (activeFilter === 'numeroDiPost') {
@@ -840,7 +836,6 @@ function removeSquealMutation(squealId, channelId) {
         $('#channelName').val(channelName);
         
         $('#channelModal').modal('show');
-        console.log('Ciao, cliccato su .squeal-container');
     $('#channelModal').modal('hide');
     loadSqueals(currentChannelId);
         });
@@ -875,9 +870,9 @@ function removeSquealMutation(squealId, channelId) {
             },
           }),
           success: function (response) {
-            console.log('Query success:', response);
+
             // Aggiungi gli elementi dei canali ufficiali al container
-            console.log('response.data.getChannelsByType', response.data.getChannelsByType.length);
+    
             channelsDataInitial = response.data.getChannelsByType;
             const filteredChannels = response.data.getChannelsByType.filter(channel => {
               return channel.keyword.toLowerCase().includes(searchText.toLowerCase());
@@ -923,8 +918,6 @@ function removeSquealMutation(squealId, channelId) {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
           error: function (error) {

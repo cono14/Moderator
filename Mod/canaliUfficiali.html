@@ -543,13 +543,11 @@
       },
     }),
     success: function (response) {
-      console.log('Squeals del canale:', response);
 
       if(response.data.getSquealsByChannel.length === 0) {
-        console.log('Non ci sono squeals da visualizzare');
         toastr.info('Non ci sono squeals da visualizzare');
       } else {
-        console.log('Squeals caricati con successo');
+
         updateSquealsUI(response.data.getSquealsByChannel);
         //clean the squeal modal
         $('#squealsModal').modal('show');
@@ -591,7 +589,6 @@ function updateSquealsUI(squeals) {
     squealContainer.append(userInfo);
 
     const squealText = $('<div class="squeal-text"></div>');
-    console.log('Squeal uploadedFile,' , squeal.squeal.uploadedFile)
     let typeOfUpload = squeal.squeal.typeOfUpload;
     if(typeOfUpload == "image" && squeal.squeal.uploadedFile){
       squealText.append(`<img src="${squeal.squeal.uploadedFile}"  margin-bottom: 10px;">`);
@@ -678,7 +675,6 @@ function removeSquealMutation(squealId, channelId) {
       },
     }),
     success: function (response) {
-      console.log('Squeal rimosso con successo:', response);
       toastr.success('Squeal rimosso con successo');
     //wait 1 second before reloading the page
     setTimeout(function(){ location.reload(); }, 1000);
@@ -692,7 +688,6 @@ function removeSquealMutation(squealId, channelId) {
 
 $('#viewSqueals').click(function () {
   $('#channelModal').modal('hide');
-  console.log('currentChannelId', currentChannelId);
   loadSqueals(currentChannelId);
 });
 
@@ -725,7 +720,7 @@ $('#viewSqueals').click(function () {
       if (confirm('Sei sicuro di voler eliminare il canale?')) {
         // Ottieni l'ID del canale
         const channelId = currentChannelId;
-        console.log(channelId);
+
 
         $.ajax({
           url: 'https://site222344.tw.cs.unibo.it/graphql',
@@ -745,7 +740,7 @@ $('#viewSqueals').click(function () {
             },
           }),
           success: function (response) {
-            console.log('Canale eliminato con successo:', response);
+
 
             // Mostra il messaggio di successo
             toastr.success('Canale eliminato con successo');
@@ -768,7 +763,6 @@ $('#viewSqueals').click(function () {
        // get the element id
        const channelId = currentChannelId;
 
-       console.log(channelId);
 
 
       if(!newDescription) {
@@ -802,7 +796,6 @@ $('#viewSqueals').click(function () {
           },
         }),
         success: function (response) {
-          console.log('Descrizione del canale modificata con successo:', response);
 
           // Mostra il messaggio di successo
           toastr.success('Canale creato con successo!');
@@ -845,7 +838,7 @@ $('#viewSqueals').click(function () {
 
     $('#deleteChannel').click(function () {
       // Aggiungi la logica per eliminare il canale
-      console.log('Elimina Canale');
+    
     });
 
     // Chiudi il modal se l'utente clicca fuori da esso
@@ -873,7 +866,6 @@ $('#viewSqueals').click(function () {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
             // Aggiungi gli elementi dei canali ufficiali al container
             const filteredChannels = response.data.getAllOfficialChannels.filter(channel => {
               return channel.name.toLowerCase().includes(searchText.toLowerCase());
@@ -919,8 +911,6 @@ $('#viewSqueals').click(function () {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
           error: function (error) {

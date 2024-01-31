@@ -366,8 +366,6 @@
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             // Puoi gestire i dati qui e aggiornare la tua interfaccia utente
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
@@ -378,13 +376,6 @@
       }
 
   
-
-      // Aggiungi un gestore di eventi al pulsante "Crea canale"
-    
-
-
-      // Chiamare la funzione quando il documento è pronto
-      console.log('chiamando')
       getMyAccount();
     });
     function createChannel() {
@@ -434,10 +425,8 @@
             },
           }),
           success: function (response) {
-            console.log('Mutation success:', response);
             if(response.errors && response.errors.length > 0) {
               const errorMessage = response.errors[0].message;
-              console.log('Error message:', errorMessage);
               toastr.error('Nome già usato');
               return;
             }

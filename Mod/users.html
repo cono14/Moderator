@@ -663,7 +663,6 @@
                                 },
                             }),
                             success: function (response) {
-                                console.log('Mutation success:', response);
                                 if (isBlocked){
                                   toastr.success('Utente sbloccato con successo!');
                                 } else {
@@ -704,7 +703,6 @@
             }),
             success: function (response) {
               const mostFriends = response.data.getMostFriends;
-              console.log('mostActiveUsers', mostFriends)
               mostFriends.splice(3);
               displayMostActiveUsers(mostFriends, 'friends');
             },
@@ -715,7 +713,6 @@
         }
 
 function getMostActiveUsers() {
-            console.log('ciao')
   $.ajax({
     url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
@@ -733,7 +730,6 @@ function getMostActiveUsers() {
     }),
     success: function (response) {
       const mostActiveUsers = response.data.getMostActiveUsers;
-      console.log('mostActiveUsers', mostActiveUsers)
       mostActiveUsers.splice(3);
       displayMostActiveUsers(mostActiveUsers, 'active');
     },
@@ -760,7 +756,6 @@ function getMostActiveUsers() {
     }),
     success: function (response) {
       const unpopularUsers = response.data.getMostUnpopularUser;
-      console.log('mostActiveUsers', getMostUnpopularUser)
       //take only the first three
         unpopularUsers.splice(3);
       displayMostActiveUsers(unpopularUsers, 'unpopular');
@@ -772,7 +767,6 @@ function getMostActiveUsers() {
 }
 
  function getMostPopularUsers() {
-            console.log('ciao')
   $.ajax({
     url: 'https://site222344.tw.cs.unibo.it/graphql',
     type: 'POST',
@@ -792,7 +786,6 @@ function getMostActiveUsers() {
     }),
     success: function (response) {
       const mostPopularUsers = response.data.getMostPopularUsers;
-      console.log('mostActiveUsers', getMostPopularUsers)
       //take only the first three
         mostPopularUsers.splice(3);
       displayMostActiveUsers(mostPopularUsers, 'popular');
@@ -884,7 +877,6 @@ mostActiveUsersList.empty();
                 },
             }),
             success: function (response) {
-                console.log('Mutation success:', response);
                 toastr.success('Caratteri rimossi con successo!');
             },
             error: function (error) {
@@ -910,7 +902,6 @@ mostActiveUsersList.empty();
                         },
                     }),
                     success: function (response) {
-                        console.log('Mutation success:', response);
                         toastr.success('Caratteri aggiunti con successo!');
                     },
                     error: function (error) {
@@ -922,7 +913,6 @@ mostActiveUsersList.empty();
    
         
                     function openUserProfile(userId) {
-                        console.log('ciao')
                             $.ajax({
                                 url: 'https://site222344.tw.cs.unibo.it/graphql',
                                 type: 'POST',
@@ -960,7 +950,6 @@ mostActiveUsersList.empty();
                                         }),
                                         success: function (response) {
                                         const userDetails = response.data.getUserById;
-                                        console.log('userDetails', userDetails)
                                         // Apri la scheda del profilo con le informazioni ottenute
                                         modalUpdate(userDetails);
                                         },
@@ -1038,8 +1027,8 @@ mostActiveUsersList.empty();
                 <h5 class="modal-title">Modifica caratteri</h5>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="operationType" id="operationType">Tipo di operazione da effettuare:</label>
+              <div class="form-group">
+                    <label for="addOperation">Tipo di operazione da effettuare:</label>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="operationType" id="addOperation" value="add" checked>
                         <label class="form-check-label" for="addOperation">Aggiunta di caratteri</label>
@@ -1080,8 +1069,6 @@ mostActiveUsersList.empty();
                             const charactersToModify = $('#charactersToAdd').val();
                             const typeOfCharactersToModify = $('#typeOfCharacters').val();
                             const operationType = $('input[name="operationType"]:checked').val();
-                            console.log('charachters:', charactersToModify)
-                            console.log('typeOfCharactersToModify', typeOfCharactersToModify)
                             if (charactersToModify && typeOfCharactersToModify) {
                                 if (operationType === 'remove' && charactersToModify > userDetails[`caratteri_${typeOfCharactersToModify.toLowerCase()}_rimanenti`]) {
                                     toastr.error('Impossibile rimuovere più caratteri di quanti l\'utente ne ha a disposizione.');
@@ -1138,7 +1125,6 @@ mostActiveUsersList.empty();
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
 
             allUsers = [
               ...response.data.getAllBasicUsers,
@@ -1360,8 +1346,6 @@ mostActiveUsersList.empty();
               `,
             }),
             success: function (response) {
-              console.log('Query success:', response);
-              console.log('Dati utente');
               // Puoi gestire i dati qui e aggiornare la tua interfaccia utente
               $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
             },
@@ -1390,9 +1374,7 @@ mostActiveUsersList.empty();
             
          });
          $('#searchIcon').on('click', function () {
-                console.log('Search launched')
                 const areFiltersSelected = validateFilters();
-                console.log('areFilteresSelected:', areFiltersSelected)
 
                 if (!areFiltersSelected) {
                     // Mostriamo un messaggio di errore se nessun filtro è selezionato
@@ -1403,13 +1385,10 @@ mostActiveUsersList.empty();
                 const userType = $('input[name="userType"]:checked').val() || null;
                 const popularityIndex = $('input[name="popularity"]:checked').val();
 
-                console.log('userType:', userType)
                 if((userType === 'userTypeSMM' || userType === 'userTypeSquealer') && popularityIndex !== undefined){
                   toastr.error('Non è possibile applicare il filtro di popolarità agli utenti SMM e Squealer.')
                   return;
                 }
-                console.log('popularityIndex:', popularityIndex)
-                console.log('userType:', userType)
                 makeBackendCall(userType, popularityIndex);
             });
 
@@ -1476,7 +1455,6 @@ mostActiveUsersList.empty();
                         }),
                         success: function (response) {
                             const userDetails = response.data.getByUsername;
-                            console.log('User Details:', userDetails);
                             modalUpdate(userDetails)
                            
                         },

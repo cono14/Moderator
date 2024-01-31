@@ -646,7 +646,6 @@
     let filtraProprietari = [];
     let allUsers = [];
     function filterUsers(keyword, userListId, list) {
-          console.log('list', list)
           const filteredUsers = list.filter(user => user.username.toLowerCase().includes(keyword.toLowerCase()));
           displayUsers(filteredUsers, userListId);
         }
@@ -722,14 +721,12 @@
 
   function displayUsers(users, userListId) {
     const userList = $(`#${userListId}`);
-    console.log('userList', userList);
     userList.empty();
   
     users.forEach((user, index) => {
         //if the user is in the 'destinatariInizialiUsers' don't display it
         
         if (userListId === 'addUsersList' && channelOwnersIds.includes(user._id)) {
-            console.log('ciaoo')
             return;
         }
 
@@ -782,30 +779,24 @@
                     if (userIndex !== -1) {
                          selectedAddUsers.splice(userIndex, 1);
                     }
-                    console.log('selectedAddUsers', selectedAddUsers);
                 } else if (userListId === 'removeUsersList') {
                     const userIndex = selectedRemoveUsers.indexOf(user.username);
                     if (userIndex !== -1) {
                         selectedRemoveUsers.splice(userIndex, 1);
                     }
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
                 } else if (userListId === 'filterUserList') {
                     const userIndex = filtraProprietari.indexOf(user.username);
                     if (userIndex !== -1) {
                         filtraProprietari.splice(userIndex, 1);
                     }
-                    console.log('filtraPropritari', filtraProprietari);
                 }                 
             } else {
                 if (userListId === 'addUsersList') {
                     selectedAddUsers.push(user.username);
-                    console.log('selectedAddUsers', selectedAddUsers);
                 } else if (userListId === 'removeUsersList') {
                     selectedRemoveUsers.push(user.username);
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
                 } else if (userListId === 'filterUserList') {
                     filtraProprietari.push(user.username);
-                    console.log('filtraPropritari', filtraProprietari);
                 } 
             }
             
@@ -834,7 +825,6 @@ function getAllUsersForModal() {
       `,
     }),
     success: function (response) {
-      console.log('Query success:', response);
       allUsers = response.data.getAllBasicUsers;
       const allUsersForModal = response.data.getAllBasicUsers;
       displayUsers(allUsersForModal, 'filterUserList');
@@ -893,7 +883,6 @@ function getAllOwners() {
 
     // Attendere che tutte le chiamate AJAX siano completate prima di chiamare displayUsers
     Promise.all(promises).then(() => {
-        console.log('userDocuments', channelOwners);
         displayUsers(channelOwners, 'removeUsersList');
         
     });
@@ -929,7 +918,6 @@ function getAllUsers() {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
             allUsers = response.data.getAllBasicUsers;
             displayUsers(allUsers, 'addUsersList');
           },
@@ -966,7 +954,6 @@ function getAllUsers() {
                 },
             }),
             success: function (response) {
-                console.log('Aggiunta di proprietari con successo:', response);
             },
             error: function (error) {
                 toastr.error('Errore durante l\'aggiunta di proprietari');
@@ -997,7 +984,6 @@ function getAllUsers() {
                 },
             }),
             success: function (response) {
-                console.log('Rimozione di proprietari con successo:', response);
             
             },
             error: function (error) {
@@ -1008,7 +994,6 @@ function getAllUsers() {
     }
 
     const newChannelName = $('.nameContainer input').val();
-    console.log('newChannelName', newChannelName);
     if (newChannelName) {
         // Chiamata GraphQL per cambiare il nome del canale
         $.ajax({
@@ -1031,7 +1016,6 @@ function getAllUsers() {
                 },
             }),
             success: function (response) {
-              console.log('Cambio del nome del canale con successo:', response);
             },
             error: function (error) {
                 console.error('Errore durante il cambio del nome del canale:', error);
@@ -1050,10 +1034,8 @@ function getAllUsers() {
 
 $('#blockChannel').click(function () {
     const channelId = currentChannelId;
-    console.log('channelsData', channelsDataInitial);
     const channel = channelsDataInitial.find(channel => channel._id === channelId);
     const isBlocked = channel.isBlocked;
-    console.log('isBlocked', isBlocked);
     if (isBlocked) {
         // Chiamata GraphQL per sbloccare il canale
         $.ajax({
@@ -1076,7 +1058,6 @@ $('#blockChannel').click(function () {
                 },
             }),
             success: function (response) {
-                console.log('Sblocco del canale con successo:', response);
                 toastr.success('Canale sbloccato con successo');
             },
             error: function (error) {
@@ -1106,7 +1087,6 @@ $('#blockChannel').click(function () {
                 },
             }),
             success: function (response) {
-                console.log('Blocco del canale con successo:', response);
                 toastr.success('Canale bloccato con successo');
             },
             error: function (error) {
@@ -1165,7 +1145,6 @@ $('#blockChannel').click(function () {
       },
     }),
     success: function (response) {
-      console.log('Squeals del canale:', response);
 
       if(response.data.getSquealsByChannel.length === 0) {
         toastr.info('Non ci sono squeals da visualizzare');
@@ -1210,7 +1189,6 @@ function updateSquealsUI(squeals) {
     squealContainer.append(userInfo);
 
     const squealText = $('<div class="squeal-text"></div>');
-    console.log('Squeal uploadedFile,' , squeal.squeal.uploadedFile)
     let typeOfUpload = squeal.squeal.typeOfUpload;
     if(typeOfUpload == "image" && squeal.squeal.uploadedFile){
       squealText.append(`<img src="${squeal.squeal.uploadedFile}"  margin-bottom: 10px;">`);
@@ -1302,18 +1280,13 @@ function getUserChannels(searchText = "") {
             },
           }),
           success: function (response) {
-            console.log('Query success:', response);
             // Aggiungi gli elementi dei canali ufficiali al container
-            console.log('response.data.getChannelsByType', response.data.getChannelsByType.length);
             for(let i = 0; i< response.data.getChannelsByType.length; i++){
               for(let j = 0; j< response.data.getChannelsByType[i].owners.length; j++){
                 channelOwnersIds.push(response.data.getChannelsByType[i].owners[j]);
               }
             }
-
-            console.log('channelOwnersIds', channelOwnersIds);
             channelsDataInitial = response.data.getChannelsByType; 
-            console.log('channelsDataInitial', channelsDataInitial); 
             const filteredChannels = response.data.getChannelsByType.filter(channel => {
               return channel.name.toLowerCase().includes(searchText.toLowerCase());
             });
@@ -1350,7 +1323,6 @@ function removeSquealMutation(squealId, channelId) {
       },
     }),
     success: function (response) {
-      console.log('Squeal rimosso con successo:', response);
       toastr.success('Squeal rimosso con successo');
     //wait 1 second before reloading the page
     getUserChannels();
@@ -1417,7 +1389,6 @@ $('#viewSqueals').click(function () {
           // Aggiungi la classe 'clicked' solo al pulsante cliccato
           $(this).addClass('clicked');
         if (activeFilter === 'popolarità') {
-            console.log('Ordina per popolarità');
             channelsDataInitial.sort((a, b) => b.partecipants.length - a.partecipants.length);
             updateChannelUI(channelsDataInitial);
         } else if (activeFilter === 'numeroDiPost') {
@@ -1426,7 +1397,6 @@ $('#viewSqueals').click(function () {
             if (numberOfPosts !== null) {
                 // Filtra i canali con un numero di partecipanti maggiore o uguale a numberOfParticipants
                 for(let i = 0; i < channelsDataInitial.length; i++){
-                 console.log('channelsDataInitial[i].squeals.length', channelsDataInitial[i].name + channelsDataInitial[i].squeals.length);
                 }
                 const filteredChannels = channelsDataInitial.filter(channel => channel.squeals.length >= parseInt(numberOfPosts));
                 // Aggiorna l'UI con i canali filtrati
@@ -1504,7 +1474,6 @@ $('#viewSqueals').click(function () {
 
     $('#deleteChannel').click(function () {
       // Aggiungi la logica per eliminare il canale
-      console.log('Elimina Canale');
     });
 
     // Chiudi il modal se l'utente clicca fuori da esso
@@ -1542,8 +1511,6 @@ $('#viewSqueals').click(function () {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
           error: function (error) {

@@ -167,10 +167,8 @@ $(document).ready(function() {
         `,
       }),
       success: function(response) {
-        console.log('Login success:', response);
         if (response.errors && response.errors.length > 0) {
           const errorMessage = response.errors[0].message;
-          console.log('Error message:', errorMessage);
           $('#errorMessage').fadeToggle();
         } else {
           // Una volta effettuato l'accesso con successo, esegui la redirezione
@@ -182,7 +180,6 @@ $(document).ready(function() {
           $.ajaxSetup({
             beforeSend: function(xhr) {
               xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-              console.log('Bearer ' + token);
               window.location.href = '/mod/analisi';
             }
           });

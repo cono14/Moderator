@@ -469,10 +469,6 @@
       function (position) {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-
-        // Visualizza la mappa con il puntino sulla posizione attuale
-        console.log('Latitudine:', lat);
-        console.log('Longitudine:', lng);
         displayMapWithMarker(lat, lng);
       },
       function (error) {
@@ -487,7 +483,6 @@
 }
 
   function displayUploadedFile() {
-    console.log('displayUploadedFile');
     const fileInput = document.getElementById('fileInput');
     const mediaContainer = document.getElementById('mediaContainer');
     const squealTextarea = document.getElementById('squealTextarea');
@@ -678,7 +673,6 @@ function postSqueal() {
 }
 
 function handleSquealResponse(response) {
-    console.log('Squeal inviato con successo:', response);
     if (response.errors) {
         toastr.error('Si è verificato un errore durante l\'invio dello squeal.');
     } else {
@@ -704,7 +698,6 @@ function handleSquealResponse(response) {
 
     function displayUsers(users, userListId, isChannel = false) {
     const userList = $(`#${userListId}`);
-    console.log('userList', userList);
     userList.empty();
   
     users.forEach((user, index) => {
@@ -777,10 +770,6 @@ function handleSquealResponse(response) {
                     destinationUser = destinationUser.filter(u => u !== userId);
                 }
             }
-
-            // Puoi fare qualcos'altro con le liste destinationUser e destinationChannel, se necessario
-            console.log('Destination Users:', destinationUser);
-            console.log('Destination Channels:', destinationChannel);
         });
 
 
@@ -824,7 +813,6 @@ function getAllUsers() {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
             allUsers = response.data.getAllBasicUsers;
             displayUsers(allUsers, 'userList');
             
@@ -895,8 +883,6 @@ function getAllUsers() {
             `,
           }),
           success: function (response) {
-            console.log('Query success:', response);
-            console.log('Dati utente');
             $('.welcome-bar p').text('Bentornato, ' + response.data.getMyAccount.nome);
           },
           error: function (error) {
