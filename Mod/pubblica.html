@@ -696,17 +696,21 @@ function handleSquealResponse(response) {
 }
 
 
-    function displayUsers(users, userListId, isChannel = false) {
+function displayUsers(users, userListId) {
     const userList = $(`#${userListId}`);
+    console.log('userList', userList);
     userList.empty();
-  
+
     users.forEach((user, index) => {
         //if the user is in the 'destinatariInizialiUsers' don't display it
+        if (userListId === 'addUsersList' && channelOwnersIds.includes(user._id)) {
+            console.log('ciaoo');
+            return;
+        }
 
-        const listItem = $('<li class="user-list-item ml-6" ></li>');
-        listItem.attr('id', user._id);
+        const listItem = $('<li class="user-list-item ml-6"></li>');
 
-        const imgElement = $(`<img src="${isChannel ? user.channelImage || './images/channel.jpeg' : user.profileImage || './images/user_image.jpg'}" alt="${isChannel ? user.name : user.username}">`);
+        const imgElement = $(`<img src="${ user.profileImage || './images/user_image.jpg'}" alt="${ user.username}">`);
         imgElement.css({
             'width': '35px',
             'height': '35px',
@@ -715,16 +719,16 @@ function handleSquealResponse(response) {
             'border': '0.5px solid black'
         });
 
-        const spanElement = $(`<span>${isChannel ? user.name : user.username}</span>`);
+        const spanElement = $(`<span>${user.username}</span>`);
 
         // Aggiungi una casella di controllo per selezionare l'utente/canale
-        const selectCheckbox = $('<input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >');
+        const selectCheckboxId = `${userListId}_checkbox_${index}`;
+        const selectCheckbox = $(`<input class="form-check-input" type="checkbox" id="${selectCheckboxId}" value="" aria-label="..." >`);
         selectCheckbox.css({
             'margin-left': 'auto',
             'margin-right': '7%',
         });
-        //check if the user is in the 'destinatariInizialiUsers' array
-       
+
         listItem.append(imgElement);
         listItem.append(spanElement);
         listItem.append(selectCheckbox);
@@ -747,35 +751,44 @@ function handleSquealResponse(response) {
 
         // Gestisci il clic sulla casella di controllo per selezionare/deselezionare l'utente/canale
         selectCheckbox.click(function () {
-            const userId = user._id;
-            const channelId = isChannel ? user._id : null;
-
-            // Verifica se la casella di controllo è selezionata o deselezionata
-            if ($(this).prop('checked')) {
-                // Casella di controllo selezionata
-                if (isChannel) {
-                    // È un canale, aggiungi l'id alla lista dei canali di destinazione
-                    destinationChannel.push(channelId);
-                } else {
-                    // È un utente, aggiungi l'utente alla lista degli utenti di destinazione
-                    destinationUser.push(userId);
+            if (!$(this).prop('checked')) {
+                if (userListId === 'addUsersList') {
+                    const userIndex = selectedAddUsers.indexOf(user.username);
+                    if (userIndex !== -1) {
+                        selectedAddUsers.splice(userIndex, 1);
+                    }
+                    console.log('selectedAddUsers', selectedAddUsers);
+                } else if (userListId === 'removeUsersList') {
+                    const userIndex = selectedRemoveUsers.indexOf(user.username);
+                    if (userIndex !== -1) {
+                        selectedRemoveUsers.splice(userIndex, 1);
+                    }
+                    console.log('selectedRemoveUsers', selectedRemoveUsers);
+                } else if (userListId === 'filterUserList') {
+                    const userIndex = filtraProprietari.indexOf(user.username);
+                    if (userIndex !== -1) {
+                        filtraProprietari.splice(userIndex, 1);
+                    }
+                    console.log('filtraPropritari', filtraProprietari);
                 }
             } else {
-                // Casella di controllo deselezionata
-                if (isChannel) {
-                    // È un canale, rimuovi l'id dalla lista dei canali di destinazione
-                    destinationChannel = destinationChannel.filter(id => id !== channelId);
-                } else {
-                    // È un utente, rimuovi l'utente dalla lista degli utenti di destinazione
-                    destinationUser = destinationUser.filter(u => u !== userId);
+                if (userListId === 'addUsersList') {
+                    selectedAddUsers.push(user.username);
+                    console.log('selectedAddUsers', selectedAddUsers);
+                } else if (userListId === 'removeUsersList') {
+                    selectedRemoveUsers.push(user.username);
+                    console.log('selectedRemoveUsers', selectedRemoveUsers);
+                } else if (userListId === 'filterUserList') {
+                    filtraProprietari.push(user.username);
+                    console.log('filtraPropritari', filtraProprietari);
                 }
             }
         });
 
-
         userList.append(listItem);
     });
 }
+
 
 let allUsers = [];
 let allChannels = [];

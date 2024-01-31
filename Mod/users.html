@@ -1087,6 +1087,11 @@ mostActiveUsersList.empty();
     });   
             }
 
+
+            $(document.body).on('hidden.bs.modal', '#addCharactersModal', function (e) {
+                $(this).remove();
+            });
+
         function validateFilters() {
             const userTypeChecked = $('input[name="userType"]:checked').length > 0;
             const popularityChecked = $('input[name="popularity"]:checked').length > 0;

@@ -721,12 +721,13 @@
 
   function displayUsers(users, userListId) {
     const userList = $(`#${userListId}`);
+    console.log('userList', userList);
     userList.empty();
-  
+
     users.forEach((user, index) => {
         //if the user is in the 'destinatariInizialiUsers' don't display it
-        
         if (userListId === 'addUsersList' && channelOwnersIds.includes(user._id)) {
+            console.log('ciaoo');
             return;
         }
 
@@ -744,13 +745,13 @@
         const spanElement = $(`<span>${user.username}</span>`);
 
         // Aggiungi una casella di controllo per selezionare l'utente/canale
-        const selectCheckbox = $('<input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >');
+        const selectCheckboxId = `${userListId}_checkbox_${index}`;
+        const selectCheckbox = $(`<input class="form-check-input" type="checkbox" id="${selectCheckboxId}" value="" aria-label="..." >`);
         selectCheckbox.css({
             'margin-left': 'auto',
             'margin-right': '7%',
         });
-        //check if the user is in the 'destinatariInizialiUsers' array
-       
+
         listItem.append(imgElement);
         listItem.append(spanElement);
         listItem.append(selectCheckbox);
@@ -774,37 +775,43 @@
         // Gestisci il clic sulla casella di controllo per selezionare/deselezionare l'utente/canale
         selectCheckbox.click(function () {
             if (!$(this).prop('checked')) {
-               if (userListId === 'addUsersList') {
-                    const userIndex =  selectedAddUsers.indexOf(user.username);
+                if (userListId === 'addUsersList') {
+                    const userIndex = selectedAddUsers.indexOf(user.username);
                     if (userIndex !== -1) {
-                         selectedAddUsers.splice(userIndex, 1);
+                        selectedAddUsers.splice(userIndex, 1);
                     }
+                    console.log('selectedAddUsers', selectedAddUsers);
                 } else if (userListId === 'removeUsersList') {
                     const userIndex = selectedRemoveUsers.indexOf(user.username);
                     if (userIndex !== -1) {
                         selectedRemoveUsers.splice(userIndex, 1);
                     }
+                    console.log('selectedRemoveUsers', selectedRemoveUsers);
                 } else if (userListId === 'filterUserList') {
                     const userIndex = filtraProprietari.indexOf(user.username);
                     if (userIndex !== -1) {
                         filtraProprietari.splice(userIndex, 1);
                     }
-                }                 
+                    console.log('filtraPropritari', filtraProprietari);
+                }
             } else {
                 if (userListId === 'addUsersList') {
                     selectedAddUsers.push(user.username);
+                    console.log('selectedAddUsers', selectedAddUsers);
                 } else if (userListId === 'removeUsersList') {
                     selectedRemoveUsers.push(user.username);
+                    console.log('selectedRemoveUsers', selectedRemoveUsers);
                 } else if (userListId === 'filterUserList') {
                     filtraProprietari.push(user.username);
-                } 
+                    console.log('filtraPropritari', filtraProprietari);
+                }
             }
-            
         });
 
         userList.append(listItem);
     });
 }
+
 
 function getAllUsersForModal() {
   $.ajax({
