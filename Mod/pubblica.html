@@ -695,22 +695,18 @@ function handleSquealResponse(response) {
     }
 }
 
-
-function displayUsers(users, userListId) {
+function displayUsers(users, userListId, isChannel = false) {
     const userList = $(`#${userListId}`);
-    console.log('userList', userList);
-    userList.empty();
 
+    userList.empty();
+  
     users.forEach((user, index) => {
         //if the user is in the 'destinatariInizialiUsers' don't display it
-        if (userListId === 'addUsersList' && channelOwnersIds.includes(user._id)) {
-            console.log('ciaoo');
-            return;
-        }
 
-        const listItem = $('<li class="user-list-item ml-6"></li>');
+        const listItem = $('<li class="user-list-item ml-6" ></li>');
+        listItem.attr('id', user._id);
 
-        const imgElement = $(`<img src="${ user.profileImage || './images/user_image.jpg'}" alt="${ user.username}">`);
+        const imgElement = $(`<img src="${isChannel ? user.channelImage || './images/channel.jpeg' : user.profileImage || './images/user_image.jpg'}" alt="${isChannel ? user.name : user.username}">`);
         imgElement.css({
             'width': '35px',
             'height': '35px',
@@ -719,7 +715,7 @@ function displayUsers(users, userListId) {
             'border': '0.5px solid black'
         });
 
-        const spanElement = $(`<span>${user.username}</span>`);
+        const spanElement = $(`<span>${isChannel ? user.name : user.username}</span>`);
 
         // Aggiungi una casella di controllo per selezionare l'utente/canale
         const selectCheckboxId = `${userListId}_checkbox_${index}`;
@@ -727,8 +723,10 @@ function displayUsers(users, userListId) {
         selectCheckbox.css({
             'margin-left': 'auto',
             'margin-right': '7%',
+            'border': '2px solid #0D6EFD',
         });
-
+        //check if the user is in the 'destinatariInizialiUsers' array
+       
         listItem.append(imgElement);
         listItem.append(spanElement);
         listItem.append(selectCheckbox);
@@ -751,39 +749,32 @@ function displayUsers(users, userListId) {
 
         // Gestisci il clic sulla casella di controllo per selezionare/deselezionare l'utente/canale
         selectCheckbox.click(function () {
-            if (!$(this).prop('checked')) {
-                if (userListId === 'addUsersList') {
-                    const userIndex = selectedAddUsers.indexOf(user.username);
-                    if (userIndex !== -1) {
-                        selectedAddUsers.splice(userIndex, 1);
-                    }
-                    console.log('selectedAddUsers', selectedAddUsers);
-                } else if (userListId === 'removeUsersList') {
-                    const userIndex = selectedRemoveUsers.indexOf(user.username);
-                    if (userIndex !== -1) {
-                        selectedRemoveUsers.splice(userIndex, 1);
-                    }
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
-                } else if (userListId === 'filterUserList') {
-                    const userIndex = filtraProprietari.indexOf(user.username);
-                    if (userIndex !== -1) {
-                        filtraProprietari.splice(userIndex, 1);
-                    }
-                    console.log('filtraPropritari', filtraProprietari);
+            const userId = user._id;
+            const channelId = isChannel ? user._id : null;
+
+            // Verifica se la casella di controllo è selezionata o deselezionata
+            if ($(this).prop('checked')) {
+                // Casella di controllo selezionata
+                if (isChannel) {
+                    // È un canale, aggiungi l'id alla lista dei canali di destinazione
+                    destinationChannel.push(channelId);
+                } else {
+                    // È un utente, aggiungi l'utente alla lista degli utenti di destinazione
+                    destinationUser.push(userId);
                 }
             } else {
-                if (userListId === 'addUsersList') {
-                    selectedAddUsers.push(user.username);
-                    console.log('selectedAddUsers', selectedAddUsers);
-                } else if (userListId === 'removeUsersList') {
-                    selectedRemoveUsers.push(user.username);
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
-                } else if (userListId === 'filterUserList') {
-                    filtraProprietari.push(user.username);
-                    console.log('filtraPropritari', filtraProprietari);
+                // Casella di controllo deselezionata
+                if (isChannel) {
+                    // È un canale, rimuovi l'id dalla lista dei canali di destinazione
+                    destinationChannel = destinationChannel.filter(id => id !== channelId);
+                } else {
+                    // È un utente, rimuovi l'utente dalla lista degli utenti di destinazione
+                    destinationUser = destinationUser.filter(u => u !== userId);
                 }
             }
+
         });
+
 
         userList.append(listItem);
     });

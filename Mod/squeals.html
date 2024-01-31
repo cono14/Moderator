@@ -822,21 +822,33 @@
   
 
 
-  function displayUsers(users, userListId) {
+
+  function displayUsers(users, userListId, isChannel = false) {
     const userList = $(`#${userListId}`);
     console.log('userList', userList);
     userList.empty();
-
+  
     users.forEach((user, index) => {
         //if the user is in the 'destinatariInizialiUsers' don't display it
-        if (userListId === 'addUsersList' && channelOwnersIds.includes(user._id)) {
-            console.log('ciaoo');
+        
+        if (userListId === 'addUsersList' && destinatariInizialiUsers.includes(user._id)) {
+            console.log('ciaoo')
             return;
+        }
+
+        
+        if(userListId=== 'addChannelsList'){
+          
+          if (destinatariInizialiChannels.includes(user._id)) {
+            console.log('ciaoo')
+            return;
+        }
+          
         }
 
         const listItem = $('<li class="user-list-item ml-6"></li>');
 
-        const imgElement = $(`<img src="${ user.profileImage || './images/user_image.jpg'}" alt="${ user.username}">`);
+        const imgElement = $(`<img src="${isChannel ? user.channelImage || './images/channel.jpeg' : user.profileImage || './images/user_image.jpg'}" alt="${isChannel ? user.name : user.username}">`);
         imgElement.css({
             'width': '35px',
             'height': '35px',
@@ -845,7 +857,7 @@
             'border': '0.5px solid black'
         });
 
-        const spanElement = $(`<span>${user.username}</span>`);
+        const spanElement = $(`<span>${isChannel ? user.name : user.username}</span>`);
 
         // Aggiungi una casella di controllo per selezionare l'utente/canale
         const selectCheckboxId = `${userListId}_checkbox_${index}`;
@@ -853,8 +865,10 @@
         selectCheckbox.css({
             'margin-left': 'auto',
             'margin-right': '7%',
+            'border': '2px solid #0D6EFD',
         });
-
+        //check if the user is in the 'destinatariInizialiUsers' array
+       
         listItem.append(imgElement);
         listItem.append(spanElement);
         listItem.append(selectCheckbox);
@@ -878,42 +892,78 @@
         // Gestisci il clic sulla casella di controllo per selezionare/deselezionare l'utente/canale
         selectCheckbox.click(function () {
             if (!$(this).prop('checked')) {
-                if (userListId === 'addUsersList') {
-                    const userIndex = selectedAddUsers.indexOf(user.username);
+                // Se la casella di controllo è stata deselezionata, rimuovi l'utente/canale dalle variabili
+                if (userListId === 'destinatarioList') {
+                  destionationUserUsername = null;
+                    console.log('destinatarioUser', destionationUserUsername);
+                } else if (userListId === 'mittenteList') {
+                    mittenteUsername = null;
+                    console.log('mittenteUser', mittenteUsername);
+                } else if (userListId === 'addUsersList') {
+                    const userIndex = isChannel ? selectedAddChannels.indexOf(user.name) : selectedAddUsers.indexOf(user.username);
                     if (userIndex !== -1) {
-                        selectedAddUsers.splice(userIndex, 1);
+                        isChannel ? selectedAddChannels.splice(userIndex, 1) : selectedAddUsers.splice(userIndex, 1);
                     }
-                    console.log('selectedAddUsers', selectedAddUsers);
+                    console.log(isChannel ? 'selectedChannels' : 'selectedUsers', isChannel ? selectedAddChannels : selectedAddUsers);
+                    updateButtonState();
                 } else if (userListId === 'removeUsersList') {
-                    const userIndex = selectedRemoveUsers.indexOf(user.username);
+                    const userIndex = isChannel ? selectedRemoveChannels.indexOf(user.name) : selectedRemoveUsers.indexOf(user.username);
                     if (userIndex !== -1) {
-                        selectedRemoveUsers.splice(userIndex, 1);
+                        isChannel ? selectedRemoveChannels.splice(userIndex, 1) : selectedRemoveUsers.splice(userIndex, 1);
                     }
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
-                } else if (userListId === 'filterUserList') {
-                    const userIndex = filtraProprietari.indexOf(user.username);
-                    if (userIndex !== -1) {
-                        filtraProprietari.splice(userIndex, 1);
+                    console.log(isChannel ? 'selectedChannels' : 'selectedUsers', isChannel ? selectedRemoveChannels : selectedRemoveUsers);
+                    updateButtonState();
+                } else if (userListId === 'addChannelsList') {
+                    const channelIndex = selectedAddChannels.indexOf(user.name);
+                    if (channelIndex !== -1) {
+                        selectedAddChannels.splice(channelIndex, 1);
                     }
-                    console.log('filtraPropritari', filtraProprietari);
+                    console.log('selectedChannels', selectedAddChannels);
+                    updateButtonState();
+                } else if (userListId === 'removeChannelsList') {
+                    const channelIndex = selectedRemoveChannels.indexOf(user.name);
+                    if (channelIndex !== -1) {
+                        selectedRemoveChannels.splice(channelIndex, 1);
+                    }
+                    console.log('selectedChannels', selectedRemoveChannels);
+                    updateButtonState();
                 }
             } else {
-                if (userListId === 'addUsersList') {
-                    selectedAddUsers.push(user.username);
-                    console.log('selectedAddUsers', selectedAddUsers);
+                // Se la casella di controllo è stata selezionata, aggiorna le variabili
+                if (userListId === 'destinatarioList') {
+                  destionationUserUsername = isChannel ? null : user.username;
+                    $(`#${userListId} input[type=checkbox]`).not(this).prop('checked', false);
+                    
+                } else if (userListId === 'mittenteList') {
+                    mittenteUsername = isChannel ? null : user.username;
+                    console.log('mittenteUser', mittenteUsername);
+                    $(`#${userListId} input[type=checkbox]`).not(this).prop('checked', false);
+                   
+                } else if (userListId === 'addUsersList') {
+                    isChannel ? selectedAddChannels.push(user.name) : selectedAddUsers.push(user.username);
+                    console.log(isChannel ? 'selectedChannels' : 'selectedUsers', isChannel ? selectedAddChannels : selectedAddUsers);
+                    updateButtonState();
                 } else if (userListId === 'removeUsersList') {
-                    selectedRemoveUsers.push(user.username);
-                    console.log('selectedRemoveUsers', selectedRemoveUsers);
-                } else if (userListId === 'filterUserList') {
-                    filtraProprietari.push(user.username);
-                    console.log('filtraPropritari', filtraProprietari);
+                    isChannel ? selectedRemoveChannels.push(user.name) : selectedRemoveUsers.push(user.username);
+                    console.log(isChannel ? 'selectedChannels' : 'selectedUsers', isChannel ? selectedRemoveChannels : selectedRemoveUsers);
+                    updateButtonState();
+                } else if (userListId === 'addChannelsList') {
+                    selectedAddChannels.push(user.name);
+                    console.log('selectedChannels', selectedAddChannels);
+                    updateButtonState();
+                } else if (userListId === 'removeChannelsList') {
+                    selectedRemoveChannels.push(user.name);
+                    console.log('selectedChannels', selectedRemoveChannels);
+                    updateButtonState();
                 }
+
             }
         });
 
         userList.append(listItem);
     });
 }
+
 
   function getAllUserDestinatari() {
     let userDocuments = [];
