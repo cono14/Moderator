@@ -67,9 +67,10 @@
       align-items: center;
       padding-top: 12px; /* Aumenta il padding */
       padding-bottom: 12px;
+      margin-top: -5px;
+      margin-bottom: 15px;
       padding-left: 25px;
-      padding-right: 25px;
-      margin-bottom: 10%; /* Aumenta la distanza tra i bottoni */
+      padding-right: 25px; /* Aumenta la distanza tra i bottoni */
       color: white; /* Grigio più scuro */
       border: none;
       border-radius: 25px; /* Arrotonda i bordi */
@@ -78,6 +79,21 @@
       background-color: #3399FF;
     }
 
+    .logout-button {
+      display: flex;
+      align-items: center;
+      padding-top: 12px; /* Aumenta il padding */
+      padding-bottom: 12px;
+      padding-left: 25px;
+      padding-right: 25px;
+      margin-bottom: 10%; /* Aumenta la distanza tra i bottoni */
+      color: white; /* Grigio più scuro */
+      border: none;
+      border-radius: 25px; /* Arrotonda i bordi */
+      cursor: pointer;
+      font-size: 20px;
+      background-color: red;
+    }
     .navigation-button:hover {
       background-color: #3399FF;
       color: white;
@@ -274,6 +290,9 @@
       
       margin-top: 5px;
       margin-left: 10%;
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .squeal-text img {
@@ -406,6 +425,9 @@
       <button id="btnCrea" class="create-button mt-3" onclick="redirectCreateChannel()" >
         <img src="./images/creacanalew.png" alt="Crea Icon" class="navigation-icon">
         Crea canale
+      </button>
+      <button class="logout-button" onclick="logout()">
+        Logout
       </button>
 
     </div>
@@ -743,6 +765,11 @@
     function redirectMainPage(){
       window.location.href = '/mod/analisi';
     }
+    function logout() {
+      $.removeCookie('AccessTokenMod');
+      window.location.href = '/mod/';
+    }
+
 
          function openModal(modalId, userListId) {
               $(`#${modalId}`).modal('show');
